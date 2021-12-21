@@ -1,0 +1,71 @@
+{% extends "base/body.html" %}
+
+{% block title %}
+Listado General de Clientes
+    
+{% endblock title %}
+
+
+{% block header %}
+    {% if user.is_authenticated %}
+        <h1>Listado General de Clientes <a class="btn btn-success" href="{% url 'personas:crearCliente' %}">Añadir Cliente nuevo</a>
+            </h1>
+    
+    {% endif %}
+{% endblock header %}
+    
+
+{% block content %}
+    {% if query %}
+    <div class="container-fluid">
+            <div>
+                <form method="get">
+                <p>Para Buscar un Cliente en específico, digite su identificacion en la caja de texto y presione el boton buscar <input type="text" name="identificacion" > <input type="submit" value="buscar">
+                </p>
+                </form>
+            </div>
+        <hr class="dropdown-divider">
+    </div>
+
+
+        <div class="container-fluid">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Identificación</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Opciones</th>        
+                </tr>
+                </thead>
+                <tbody>  
+                    {% for row in query %}
+                    <tr>
+                        <th scope="row">{{row.identificacion}}</th>
+                        <td>{{row.nombre}}</td>
+                        <td>{{row.apellido}}</td>
+                        <td><a class="btn btn-info" href="{% url 'personas:detalleCliente' row.identificacion %}">Info</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+    <div class="container-fluid">
+        <div>
+            <form method="get">
+            <p>Para Buscar un Cliente en específico, digite su identificacion en la caja de texto y presione el boton buscar <input type="text" name="identificacion" > <input type="submit" value="buscar">
+            </p>
+            </form>
+        </div>
+    <hr class="dropdown-divider">
+</div>   
+        <p>No hay registros!, Esto puede pasar por dos razones:</p>
+        <p>1. No existen coincidencias con los criterios de búsqueda</p>
+        <p>2. No existen Registros o no se puede acceder a ellos</p>
+        <p>Si sigue viendo esta pantalla y no ha realizado ninguna consulta, contacte al proveedor del software para mayor información</p>
+            
+    {% endif %}
+
+    
+{% endblock content %}
