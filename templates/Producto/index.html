@@ -1,0 +1,88 @@
+{% extends "base/body.html" %}
+
+{% block title %}
+Productos
+    
+{% endblock title %}
+
+
+{% block header %}
+    <h1>Listado General de Productos  <a class="btn btn-success" href="{% url 'producto:productoCrear' %}">Añadir Producto nuevo</a></h1>
+{% endblock header %}
+    
+
+{% block content %}
+    {% if query %}
+    <div class="container-fluid">
+            <div>
+                <form method="get">
+                <p>Para Buscar un Producto en específico, digite su nombre en la caja de texto y presione el boton buscar <input type="text" name="producto" > <input type="submit" value="buscar">
+                </p>
+                </form>
+            </div>
+        <hr class="dropdown-divider">
+    </div>
+<table>
+    <td>
+
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Unidades</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Opciones</th>        
+                    </tr>
+                    </thead>
+                    <tbody>  
+                        {% for row in query %}
+                        <tr>
+                            <th scope="row">{{row.id}}</th>
+                            <td>{{row.nombre}}</td>
+                            <td>{{row.cantidad}}</td>
+                            <td>{{row.uniades}}</td>
+                             {% if row.marca == None %}
+                            <td>N/A</td>
+                                
+                            {% else %}
+                            <td>{{row.marca}}</td>
+                            {% endif %}                   
+                            <td><a class="btn btn-info" href="{% url 'producto:productoDetalle' row.id %}">Info</a>
+                            <a class="btn btn-success" href="{% url 'producto:add' row.id %}">Añadir a Carrito</a>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        {% else %}
+        <div class="container-fluid">
+            <div>
+                <form method="get">
+                <p>Para Buscar un producto en específico, digite su nombre en la caja de texto y presione el boton buscar <input type="text" name="producto" > <input type="submit" value="buscar">
+                </p>
+                </form>
+            </div>
+        <hr class="dropdown-divider">
+    </div>   
+        <p>No hay registros!, Esto puede pasar por dos razones:</p>
+        <p>1. No existen coincidencias con los criterios de búsqueda</p>
+        <p>2. No existen Registros o no se ṕuede acceder a ellos</p>
+        <p>Si sigue viendo esta pantalla y no ha realizado ninguna consulta, contacte al proveedor del software para mayor información</p>
+        {% endif %}
+                
+</td>
+<td>
+    
+    {% if user.is_authenticated %}
+    {% include './carrito.html' %}
+        
+    {% endif %}
+        
+</td>
+</table>
+    
+{% endblock content %}

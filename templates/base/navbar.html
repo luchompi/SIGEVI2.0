@@ -21,11 +21,28 @@
             <li><a class="dropdown-item" href="{% url 'personas:indexCliente' %}">Listado de Clientes</a></li>
             <li><a class="dropdown-item" href="{% url 'personas:crearCliente' %}">Añadir Cliente</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{% url 'personas:indexProveedor' %}">Listado de Proveedores</a></li>
+            <li><a class="dropdown-item" href="{% url 'personas:crearProveedor' %}">Añadir Proveedores</a></li>
+
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Inventario
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'producto:productoIndex' %}">Listado de Productos</a></li>
+            <li><a class="dropdown-item" href="{% url 'gestion:crearMarca' %}">Añadir Producto</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'gestion:indexMarca' %}">Listado de Marcas</a></li>
+            <li><a class="dropdown-item" href="{% url 'gestion:crearMarca' %}">Añadir Marca</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'gestion:indexCategoria' %}">Listado de Categoría</a></li>
+            <li><a class="dropdown-item" href="{% url 'gestion:crearCategoria' %}">Añadir Categoría</a></li>
+
+          </ul>
+        </li>
         </li>
       </ul>
     </div>

@@ -23,6 +23,9 @@ urlpatterns = [
     path('auth/',include("django.contrib.auth.urls")),
     path('',include("Home.urls")),
     path('personas/',include("Personas.urls",namespace="personas")),
+    path('gestion/',include("Gestion.urls",namespace="gestion")),
+    path('producto/',include("Productos.urls",namespace="producto")),
+
 
 ]
 from Home.views import not_found, forbidden

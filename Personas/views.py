@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.edit import DeleteView
-from .models import Cliente
-from .forms import clienteForm
+from .models import Cliente,Proveedor
+from .forms import clienteForm,proveedorForm
 from django.views.generic import ListView,CreateView,DetailView,UpdateView
 # Create your views here.
 
@@ -64,4 +64,66 @@ class ClienteDeleteView(PermissionRequiredMixin,DeleteView):
     model = Cliente
     template_name = "Personas/delete.html"
     success_url= "/personas/clientes/"
+
+
+#consulta de proveedores
+
+class ProveedorListView(PermissionRequiredMixin,ListView):
+    permission_required = "Personas.view_proveedor"
+    model = Proveedor
+    template_name = "Proveedor/index.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        consulta=self.request.GET.get('NIT')
+        if consulta:
+            context["query"] = Proveedor.objects.filter(NIT__istartswith=consulta)
+        else:
+            context["query"] = Proveedor.objects.all()
+        return context
+
+class ProveedorCreateView(PermissionRequiredMixin,CreateView):
+    permission_required = "Personas.add_proveedor"
+    model = Proveedor
+    form = proveedorForm
+    fields =[
+        'NIT',
+        'razonSocial',
+        'direccionEmpresa',
+        'direccionVenta',
+        'telefono',
+        'correo'
+        ]
+
+    template_name = "Proveedor/create.html"
+    success_url = '/personas/proveedores/'
+
+
+class ProveedorDetailView(PermissionRequiredMixin,DetailView):
+    permission_required="Personas.view_proveedor"
+    model = Proveedor
+    template_name = "Proveedor/detail.html"
+
+class ProveedorUpdateView(PermissionRequiredMixin,UpdateView):
+    permission_required = "Personas.add_proveedor"
+    model = Proveedor
+    form = proveedorForm
+    fields =[
+        'NIT',
+        'razonSocial',
+        'direccionEmpresa',
+        'direccionVenta',
+        'telefono',
+        'correo'
+        ]
+
+    template_name = "Proveedor/update.html"
+    success_url = "/personas/proveedores/detalles/{NIT}"
+
+
+
+class ProveedorDeleteView(PermissionRequiredMixin,DeleteView):
+    permission_required = "Personas.delete_proveedor"
+    model = Proveedor
+    template_name = "Proveedor/delete.html"
+    success_url= "/personas/proveedores/"
 
