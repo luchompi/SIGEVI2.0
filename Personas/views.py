@@ -13,8 +13,7 @@ class index_personas(PermissionRequiredMixin,ListView):
     model = Cliente
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        consulta=self.request.GET.get('identificacion')
-        if consulta:
+        if consulta := self.request.GET.get('identificacion'):
             context["query"] = Cliente.objects.filter(identificacion__istartswith=consulta)
         else:
             context["query"] = Cliente.objects.all()
@@ -74,8 +73,7 @@ class ProveedorListView(PermissionRequiredMixin,ListView):
     template_name = "Proveedor/index.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        consulta=self.request.GET.get('NIT')
-        if consulta:
+        if consulta := self.request.GET.get('NIT'):
             context["query"] = Proveedor.objects.filter(NIT__istartswith=consulta)
         else:
             context["query"] = Proveedor.objects.all()
