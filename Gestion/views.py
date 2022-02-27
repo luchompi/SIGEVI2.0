@@ -9,8 +9,7 @@ class MarcaList(PermissionRequiredMixin,ListView):
 	template_name = "Marca/index.html"
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		consulta = self.request.GET.get('marca')
-		if consulta:
+		if consulta := self.request.GET.get('marca'):
 			context["query"] = Marca.objects.filter(nombre__istartswith=consulta)
 		else:
 			context["query"]= Marca.objects.all()
@@ -49,13 +48,12 @@ class CategoriaList(PermissionRequiredMixin,ListView):
     model = Categoria
     template_name = "Categoria/index.html"
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        consulta=self.request.GET.get('categoria')
-        if consulta:
-            context["query"] = Categoria.objects.filter(nombre__istartswith=consulta)
-        else:
-            context["query"] = Categoria.objects.all()
-        return context
+    	context = super().get_context_data(**kwargs)
+    	if consulta := self.request.GET.get('categoria'):
+    		context["query"] = Categoria.objects.filter(nombre__istartswith=consulta)
+    	else:
+    		context["query"] = Categoria.objects.all()
+    	return context
     
 
 class CategoriaCreate(PermissionRequiredMixin,CreateView):
